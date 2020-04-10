@@ -2,6 +2,7 @@ package com.unlockdetection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,12 @@ public class UnlockedReceiver extends BroadcastReceiver {
 
             float r = (float)Math.random();
 
-            if (r<1){
+            SharedPreferences prefs = context.getSharedPreferences(
+            "com.quicklocker.app", Context.MODE_PRIVATE);
+            float p = prefs.getFloat("proba",0.5f);
+            Log.d("RNU",String.valueOf(p));
+
+            if (r<p){
               Intent i = new Intent(context, this.getActivityClass());
               context.startActivity(i);
             }

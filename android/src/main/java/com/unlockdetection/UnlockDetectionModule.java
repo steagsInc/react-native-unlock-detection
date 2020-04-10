@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -15,13 +16,14 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private Intent service;
-
-    private static float probablity = 0.5f;
+    private SharedPreferences prefs;
 
     public UnlockDetectionModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
         this.service = new Intent(this.reactContext, UnlockReceiverService.class);
+        this.prefs = reactContext.getSharedPreferences(
+        "com.quicklocker.app", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -32,7 +34,6 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void Activate() {
       Log.d("RNU","start");
-      Log.d("RNU",String.valueOf(probablity));
       this.reactContext.startService(this.service);
     }
 
@@ -43,15 +44,15 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setProbability(float newProbablity){
-      probablity = newProbablity;
-      Log.d("RNU",String.valueOf(probablity));
-      UnlockReceiverService.setProbability(probablity);
+    public void setProbability(float newProbability){
+      this.prefs.edit().putFloat("proba",newProbability).apply();
+
     }
 
     @ReactMethod
     public void getProbability(Callback floatCallback){
-      floatCallback.invoke(probablity);
+      float p = prefs.getFloat("proba",0.5f);
+      floatCallback.invoke(p);
     }
 
     @ReactMethod

@@ -21,7 +21,6 @@ public class UnlockReceiverService extends Service
  private final UnlockedReceiver unlockReceiver = new UnlockedReceiver();
 
  private static boolean running = false;
- private static float probablity = 0.5f;
 
  @Override
  public IBinder onBind(Intent arg0)
@@ -34,7 +33,6 @@ public class UnlockReceiverService extends Service
  {
   this.registerReceiver(unlockReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
   running = true;
-  Log.d("RNU",String.valueOf(probablity));
  }
 
  @Override
@@ -53,10 +51,6 @@ public class UnlockReceiverService extends Service
 
   public static boolean isRunning() {
       return running;
-  }
-
-  public static void setProbability(float proba) {
-    probablity = proba;
   }
 
 }
