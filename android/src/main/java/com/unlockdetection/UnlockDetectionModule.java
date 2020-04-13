@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.os.Process;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -59,5 +60,10 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     public void isRunning(Callback booleanCallback) {
       boolean bool = UnlockReceiverService.isRunning();
       booleanCallback.invoke(bool);
+    }
+
+    @ReactMethod
+    public void quit() {
+      android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
