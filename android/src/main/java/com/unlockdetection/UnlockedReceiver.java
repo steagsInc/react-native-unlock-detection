@@ -27,7 +27,7 @@ public class UnlockedReceiver extends BroadcastReceiver {
             float r = (float)Math.random();
 
             SharedPreferences prefs = context.getSharedPreferences(
-            "com.quicklocker.app", Context.MODE_PRIVATE);
+            "com.sphynx.app", Context.MODE_PRIVATE);
             float p = prefs.getFloat("proba",0.5f);
             Log.d("RNU",String.valueOf(p));
 
@@ -40,7 +40,7 @@ public class UnlockedReceiver extends BroadcastReceiver {
     }
 
     private Class getActivityClass() {
-        String className = "com.quicklocker.UnlockActivity";
+        String className = "com.sphynx.UnlockActivity";
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
