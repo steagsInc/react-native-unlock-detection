@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.IBinder ;
 import android.util.Log;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
@@ -20,6 +21,7 @@ import androidx.core.app.NotificationCompat;
 import android.app.NotificationManager;
 import android.app.NotificationChannel;
 import android.app.Notification;
+import java.util.Calendar;
 
 public class UnlockReceiverService extends Service
 {
@@ -48,6 +50,21 @@ public class UnlockReceiverService extends Service
   public int onStartCommand(Intent intent, int flags, int startId) {
     this.registerReceiver(unlockReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
     running = true;
+
+    SharedPreferences prefs = this.getSharedPreferences(
+    "com.sphynx.app", Context.MODE_PRIVATE);
+
+    int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+    if(prefs.getInt("day",0)!=day){
+
+      SharedPreferences.Editor editor = prefs.edit();
+
+      editor.putInt("day",day);
+      editor.putInt("count",0);
+
+      editor.apply();
+    }
 
     // create notif
     createNotificationChannel();

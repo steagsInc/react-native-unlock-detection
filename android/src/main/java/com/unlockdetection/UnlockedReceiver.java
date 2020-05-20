@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import java.util.Calendar;
 import android.content.Context;
 import android.os.PowerManager;
 import android.app.KeyguardManager;
@@ -29,13 +30,20 @@ public class UnlockedReceiver extends BroadcastReceiver {
             SharedPreferences prefs = context.getSharedPreferences(
             "com.sphynx.app", Context.MODE_PRIVATE);
             float p = prefs.getFloat("proba",0.5f);
-            Log.d("RNU",String.valueOf(p));
+            int start = prefs.getInt("start",0);
+            int end = prefs.getInt("end",24);
+            int max = prefs.getInt("maxPerDay",100);
+            int current = prefs.getInt("count",0);
 
-            if (r<p){
-              Intent i = new Intent(context, this.getActivityClass());
-              context.startActivity(i);
+            int currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+            if((start<end && (currentTime>=start && currentTime<end)) || (start>end && (currentTime>=start || currentTime<end))) {
+              if (r<p && current<max){
+                prefs.edit().putInt("count",current+1).apply();
+                Intent i = new Intent(context, this.getActivityClass());
+                context.startActivity(i);
+              }
             }
-
         }
     }
 

@@ -24,7 +24,7 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
         this.reactContext = reactContext;
         this.service = new Intent(this.reactContext, UnlockReceiverService.class);
         this.prefs = reactContext.getSharedPreferences(
-        "com.quicklocker.app", Context.MODE_PRIVATE);
+        "com.sphynx.app", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -45,15 +45,20 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setProbability(float newProbability){
-      this.prefs.edit().putFloat("proba",newProbability).apply();
+    public void setParameter(float newProbability,int newStart,int newEnd,int newMaxPerDay){
+      SharedPreferences.Editor editor = prefs.edit();
 
+      editor.putFloat("proba",newProbability);
+      editor.putInt("start",newStart);
+      editor.putInt("end",newEnd);
+      editor.putInt("maxPerDay",newMaxPerDay);
+
+      editor.apply();
     }
 
     @ReactMethod
-    public void getProbability(Callback floatCallback){
-      float p = prefs.getFloat("proba",0.5f);
-      floatCallback.invoke(p);
+    public void resetCount(){
+      prefs.edit().putInt("count",0).apply();
     }
 
     @ReactMethod
