@@ -45,13 +45,13 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setParameter(float newProbability,int newStart,int newEnd,int newMaxPerDay){
+    public void setParameter(float newProbability,int newStart,int newEnd,int newMaxPerHour){
       SharedPreferences.Editor editor = prefs.edit();
 
       editor.putFloat("proba",newProbability);
       editor.putInt("start",newStart);
       editor.putInt("end",newEnd);
-      editor.putInt("maxPerDay",newMaxPerDay);
+      editor.putInt("maxPerHour",newMaxPerHour);
 
       editor.apply();
     }

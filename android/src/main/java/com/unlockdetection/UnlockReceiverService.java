@@ -54,13 +54,13 @@ public class UnlockReceiverService extends Service
     SharedPreferences prefs = this.getSharedPreferences(
     "com.sphynx.app", Context.MODE_PRIVATE);
 
-    int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-    if(prefs.getInt("day",0)!=day){
+    if(prefs.getInt("hour",0)!=hour){
 
       SharedPreferences.Editor editor = prefs.edit();
 
-      editor.putInt("day",day);
+      editor.putInt("hour",hour);
       editor.putInt("count",0);
 
       editor.apply();

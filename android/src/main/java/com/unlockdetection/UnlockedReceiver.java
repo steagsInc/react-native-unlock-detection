@@ -32,7 +32,7 @@ public class UnlockedReceiver extends BroadcastReceiver {
             float p = prefs.getFloat("proba",0.5f);
             int start = prefs.getInt("start",0);
             int end = prefs.getInt("end",24);
-            int max = prefs.getInt("maxPerDay",100);
+            int max = prefs.getInt("maxPerHour",5);
             int current = prefs.getInt("count",0);
 
             int currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
