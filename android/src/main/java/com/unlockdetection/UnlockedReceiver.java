@@ -29,6 +29,9 @@ public class UnlockedReceiver extends BroadcastReceiver {
 
             SharedPreferences prefs = context.getSharedPreferences(
             "com.sphynx.app", Context.MODE_PRIVATE);
+
+            resetPerHourCount(prefs);
+
             float p = prefs.getFloat("proba",0.5f);
             int start = prefs.getInt("start",0);
             int end = prefs.getInt("end",24);
@@ -45,6 +48,22 @@ public class UnlockedReceiver extends BroadcastReceiver {
               }
             }
         }
+    }
+
+    private void resetPerHourCount(SharedPreferences prefs) {
+
+      int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+      if(prefs.getInt("hour",0)!=hour){
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putInt("hour",hour);
+        editor.putInt("count",0);
+
+        editor.apply();
+      }
+
     }
 
     private Class getActivityClass() {

@@ -51,21 +51,6 @@ public class UnlockReceiverService extends Service
     this.registerReceiver(unlockReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
     running = true;
 
-    SharedPreferences prefs = this.getSharedPreferences(
-    "com.sphynx.app", Context.MODE_PRIVATE);
-
-    int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
-    if(prefs.getInt("hour",0)!=hour){
-
-      SharedPreferences.Editor editor = prefs.edit();
-
-      editor.putInt("hour",hour);
-      editor.putInt("count",0);
-
-      editor.apply();
-    }
-
     // create notif
     createNotificationChannel();
     Resources res = this.getResources();
