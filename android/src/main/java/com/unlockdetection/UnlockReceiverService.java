@@ -71,6 +71,7 @@ public class UnlockReceiverService extends Service
  public void onDestroy()
  {
   this.unregisterReceiver(unlockReceiver);
+  stopForeground(true);
   running = false;
  }
 
