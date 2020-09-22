@@ -48,17 +48,17 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     public void setParameter(float newProbability,int newStart,int newEnd,int newMaxPerHour){
       SharedPreferences.Editor editor = prefs.edit();
 
-      editor.putFloat("proba",newProbability);
-      editor.putInt("start",newStart);
-      editor.putInt("end",newEnd);
-      editor.putInt("maxPerHour",newMaxPerHour);
+      editor.putFloat("UD-proba",newProbability);
+      editor.putInt("UD-start",newStart);
+      editor.putInt("UD-end",newEnd);
+      editor.putInt("UD-maxPerHour",newMaxPerHour);
 
       editor.apply();
     }
 
     @ReactMethod
     public void resetCount(){
-      prefs.edit().putInt("count",0).apply();
+      prefs.edit().putInt("UD-count",0).apply();
     }
 
     @ReactMethod
