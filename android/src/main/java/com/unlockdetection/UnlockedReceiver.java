@@ -27,20 +27,19 @@ public class UnlockedReceiver extends BroadcastReceiver {
             Log.d("RNU","detection");
 
             SharedPreferences prefs = context.getSharedPreferences(
-            "com.sphynx.app", Context.MODE_PRIVATE);
+            "com.QualiaInteractive.UnlockDetection", Context.MODE_PRIVATE);
 
               if (Probas.show(prefs)){
                 prefs.edit().putInt("UD-count",current+1).apply();
-                Intent i = new Intent(context, this.getActivityClass());
+                Intent i = new Intent(context, getActivityClass(prefs.getString("ClassName",null)));
                 context.startActivity(i);
               }
         }
     }
 
-    private Class getActivityClass() {
-        String className = "com.sphynx.UnlockActivity";
+    private Class getActivityClass(String className) {
         try {
-            return Class.forName(className);
+            return Class.forName(name);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;

@@ -24,7 +24,7 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
         this.reactContext = reactContext;
         this.service = new Intent(this.reactContext, UnlockReceiverService.class);
         this.prefs = reactContext.getSharedPreferences(
-        "com.sphynx.app", Context.MODE_PRIVATE);
+        "com.QualiaInteractive.UnlockDetection", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -42,6 +42,15 @@ public class UnlockDetectionModule extends ReactContextBaseJavaModule {
     public void Deactivate() {
       Log.d("RNU","stop");
       this.reactContext.stopService(this.service);
+    }
+
+    @ReactMethod
+    public void setClassName(String className){
+      SharedPreferences.Editor editor = prefs.edit();
+
+      editor.putString("ClassName",className);
+
+      editor.apply();
     }
 
     @ReactMethod
